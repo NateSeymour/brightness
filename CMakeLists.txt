@@ -11,6 +11,12 @@ set(CMAKE_C_STANDARD 23)
 
 add_executable(doorctl
         src/main.c
+        src/driver.c
+        src/driver.h
+        src/device.c
+        src/device.h
+        src/error.h
+        src/error.c
 )
 target_link_libraries(doorctl pico_stdlib)
 
