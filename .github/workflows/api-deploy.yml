@@ -24,10 +24,13 @@ jobs:
       - name: Install Dependencies
         run: for D in api/*; do [ -d "${D}" ] && cd "$D" && npm ci; done
 
+      - name: Build Functions
+        run: for D in api/*; do [ -d "${D}" ] && cd "$D" && npm run build; done
+
       - name: Archive Functions
         run: |
           mkdir -p dist/api
-          for D in api/*; do [ -d "${D}" ] && (cd "$D" && zip -r "../../dist/${D}.zip" .); done
+          for D in api/*; do [ -d "${D}" ] && (cd "${D}/dist" && zip -r "../../dist/${D}.zip" .); done
 
       - name: Deploy Functions
         run: |
