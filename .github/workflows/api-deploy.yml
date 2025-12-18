@@ -22,10 +22,10 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Install Dependencies
-        run: for D in api/*; do [ -d "${D}" ] && cd "$D" && npm ci; done
+        run: for D in api/*; do [ -d "${D}" ] && (cd "$D" && npm ci); done
 
       - name: Build Functions
-        run: for D in api/*; do [ -d "${D}" ] && cd "$D" && npm run build; done
+        run: for D in api/*; do [ -d "${D}" ] && (cd "$D" && npm run build); done
 
       - name: Archive Functions
         run: |
