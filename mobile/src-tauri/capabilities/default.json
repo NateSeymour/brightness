@@ -5,10 +5,11 @@
   "windows": [
     "main"
   ],
-  "platforms": ["iOS", "android"],
+  "platforms": ["iOS", "android", "macOS"],
   "permissions": [
     "core:default",
     "opener:default",
+    "opener:allow-open-url",
     "deep-link:default",
     "blec:default"
   ]
