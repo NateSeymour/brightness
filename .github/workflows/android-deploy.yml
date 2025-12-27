@@ -27,6 +27,7 @@ jobs:
         with:
           node-version: lts/*
           cache: 'npm'
+          cache-dependency-path: './mobile/package-lock.json'
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
