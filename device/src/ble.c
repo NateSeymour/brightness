@@ -10,7 +10,7 @@
 #include "doorctl.h"
 #include "pico/cyw43_arch.h"
 #include "device.h"
-#include "math.h"
+#include "mathutil.h"
 
 #define ATT_CHARACTERISTIC_AUTHORIZATION_TOKEN ATT_CHARACTERISTIC_5a605272_fee8_43f6_bde6_8588bd0b857f_01_VALUE_HANDLE
 

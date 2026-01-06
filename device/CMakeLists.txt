@@ -23,15 +23,17 @@ add_executable(doorctl
         src/crypto.c
         src/crypto.h
         src/pka.in.h
-        src/mbedtls_config.h
         src/btstack_config.h
+        src/mbedtls_config.h
         src/ble.c
         src/ble.h
         src/lwipopts.h
-        src/math.h
+        src/mathutil.h
 )
 target_link_libraries(doorctl
         pico_stdlib
+        pico_double_pico
+        pico_float_pico
         pico_async_context_poll
         pico_btstack_ble
         pico_btstack_cyw43
