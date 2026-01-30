@@ -1,24 +1,30 @@
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import {BleDevice, startScan} from "@mnlphlp/plugin-blec";
+import {LazyStore} from "@tauri-apps/plugin-store";
 
 export const useDevice = () => {
+    const deviceHistory = new LazyStore("device-history.json");
+
     const devices = ref<BleDevice[]>([]);
     const device = ref<BleDevice | null>(null);
+
     const connected = ref(false);
+    const autoRetry = ref(true);
 
     const sendCommand = (command: string) => {};
 
-    const tryConnect = async () => {
-        await startScan(dev => devices.value = dev, 1000);
+    const discover = async () => {};
 
-        for (const device of devices) {
-
-        }
+    const connect = async (retry: boolean = true) => {
+        
     };
 
-    onMounted(() => {
-        tryConnect();
+    watch(connected, (old, current) => {
+        if (old === true && current === false && autoRetry.value)
+        {
+            connect();
+        }
     });
 
-    return { connected, device, sendCommand };
+    return { connected, device, sendCommand, connect };
 };

@@ -105,6 +105,8 @@ void driver_rotate_handler()
     }
 
     driver_set_power_state(OFF);
+
+    irq_clear(IRQ_DRIVER_ROTATE);
 }
 
 error_t driver_init()
