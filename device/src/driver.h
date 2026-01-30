@@ -7,7 +7,10 @@
 typedef struct
 {
     uint8_t step_index;
-    float angle;
+    uint8_t hold_time_ms;
+
+    uint16_t angle;
+    uint16_t target_angle;
 } driver_state_t;
 
 extern driver_state_t g_driver_state;
@@ -18,14 +21,16 @@ typedef enum : int8_t
     RIGHT = 1,
 } driver_direction_t;
 
-typedef enum
+typedef enum : uint8_t
 {
-    OFF,
-    ON,
+    OFF = 0,
+    ON = 1,
 } driver_power_state_t;
 
 constexpr uint8_t k_driver_pins[] = { 2, 3, 4, 5 };
 constexpr uint8_t k_driver_pin_count = 4;
+
+constexpr uint8_t k_driver_stop_pin = 6;
 
 /**
  * Driver follows an 8 step motor driving pattern.
@@ -46,7 +51,12 @@ constexpr uint8_t k_driver_step_count = 8;
 
 constexpr uint32_t k_driver_steps_per_rotation = 4096;
 
-error_t driver_set_power(driver_power_state_t power_state);
+/**
+ * Set current power state either by turning on all nodes in current step or turning all off.
+ * @param state ON or OFF.
+ * @return Error.
+ */
+error_t driver_set_power_state(driver_power_state_t state);
 
 /**
  * Step the motor in the desired direction. Updates g_driver_state global struct.
@@ -56,12 +66,22 @@ error_t driver_set_power(driver_power_state_t power_state);
 error_t driver_step(driver_direction_t direction);
 
 /**
- * Discovers the current angle of the motor.
- * @param update_global Update the global driver_state.
- * @param out_angle Current angle in degrees of the motor.
+ * Turn the step motor to home position (locked).
  * @return Error.
  */
-error_t driver_autosense_angle(bool update_global, float *out_angle);
+error_t driver_reset_position();
+
+/**
+ * Sets the new target angle in degrees of the driver and triggers IRQ.
+ * @param angle New angle to point towards.
+ * @return Error.
+ */
+error_t driver_set_angle_deg(float angle);
+
+/**
+ * Interrupt handler for driver movement.
+ */
+void driver_rotate_handler();
 
 /**
  * Initializes the motor driver by completing one forward-reverse step run to ensure motor is aligned with step.

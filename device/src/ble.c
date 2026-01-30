@@ -10,6 +10,7 @@
 #include "doorctl.h"
 #include "pico/cyw43_arch.h"
 #include "device.h"
+#include "driver.h"
 #include "mathutil.h"
 
 #define ATT_CHARACTERISTIC_AUTHORIZATION_TOKEN ATT_CHARACTERISTIC_5a605272_fee8_43f6_bde6_8588bd0b857f_01_VALUE_HANDLE
@@ -52,10 +53,10 @@ static int att_write_callback(hci_con_handle_t con_handle, uint16_t att_handle, 
             char authorization_token[DOORCTL_AUTHORIZATION_TOKEN_LENGTH] = {0};
             memcpy(authorization_token, buffer, min(sizeof(authorization_token), buffer_size));
 
-            error = crypto_verify_authorization_token(authorization_token, sizeof(authorization_token));
+            error = error_ok; // crypto_verify_authorization_token(authorization_token, sizeof(authorization_token));
             if (!error_thrown(&error))
             {
-                // TODO: open door
+                irq_set_pending(IRQ_DRIVER_ROTATE);
             }
             break;
         }

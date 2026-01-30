@@ -28,10 +28,13 @@ import {openUrl} from "@tauri-apps/plugin-opener";
 import {buildLoginUrl} from "./util/auth.ts";
 import {getCurrent} from "@tauri-apps/plugin-deep-link";
 import {LazyStore} from "@tauri-apps/plugin-store";
+import {useDevice} from "./composable/useDevice.ts";
 
 import CircleButton from "./component/CircleButton.vue";
 
 const store = new LazyStore("auth.json");
+
+const { connected } = useDevice();
 
 const token = ref<string | null>(null);
 const identity = computed(() => {
