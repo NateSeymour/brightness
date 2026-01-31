@@ -49,11 +49,13 @@ error_t driver_reset_position()
 
         if (motor_at_stop)
         {
+            driver_set_power_state(OFF);
             g_driver_state.angle = 0;
             return error_ok;
         }
     }
 
+    driver_set_power_state(OFF);
     error_t error = {
         .code = ERROR_DRIVER_BAD_ANGLE_SENSOR,
         .message = "Motor made full rotation without sensing stop.",
@@ -106,6 +108,8 @@ void driver_rotate_handler()
 
     driver_set_power_state(OFF);
 
+    g_driver_state.angle = g_driver_state.target_angle;
+
     irq_clear(IRQ_DRIVER_ROTATE);
 }
 
@@ -125,11 +129,13 @@ error_t driver_init()
     gpio_init(k_driver_stop_pin);
     gpio_set_dir(k_driver_stop_pin, false);
 
+    /*
     error_t error = driver_reset_position();
     if (error_thrown(&error))
     {
         return error;
     }
+    */
 
     g_device_state.driver_initialized = true;
 

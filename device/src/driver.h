@@ -17,8 +17,8 @@ extern driver_state_t g_driver_state;
 
 typedef enum : int8_t
 {
-    LEFT = -1,
-    RIGHT = 1,
+    RIGHT = -1,
+    LEFT = 1,
 } driver_direction_t;
 
 typedef enum : uint8_t
