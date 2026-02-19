@@ -7,7 +7,7 @@
 #include "btstack.h"
 #include "crypto.h"
 #include "pico/btstack_cyw43.h"
-#include "doorctl.h"
+#include "brightness.h"
 #include "pico/cyw43_arch.h"
 #include "device.h"
 #include "driver.h"
@@ -20,7 +20,7 @@ static hci_con_handle_t hci_con_handle;
 
 constexpr uint8_t advertisement_data[] = {
     0x02, BLUETOOTH_DATA_TYPE_FLAGS, 0x06,
-    0x0b, BLUETOOTH_DATA_TYPE_COMPLETE_LOCAL_NAME, 'd', 'o', 'o', 'r', 'c', 't', 'l',
+    0x0b, BLUETOOTH_DATA_TYPE_COMPLETE_LOCAL_NAME, 'b', 'r', 'i', 'g', 'h', 't', 'n', 'e', 's', 's',
 };
 constexpr uint8_t adv_data_len = sizeof(advertisement_data);
 

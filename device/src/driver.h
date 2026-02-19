@@ -44,19 +44,14 @@ constexpr uint8_t k_driver_control_pins[] = {
     DRIVER_GPIO_LAT,
 };
 
-#define DRIVER_SCREEN_WIDTH 36
+#define DRIVER_SCREEN_WIDTH 32
 #define DRIVER_SCREEN_HEIGHT 16
 #define DRIVER_SCREEN_BUFFER_SIZE (DRIVER_SCREEN_WIDTH * DRIVER_SCREEN_HEIGHT)
 #define DRIVER_SCREEN_BUFFER_COUNT 2
 
-uint8_t driver_screen_main_buffer[DRIVER_SCREEN_BUFFER_SIZE * DRIVER_SCREEN_BUFFER_COUNT] = {};
-
-uint8_t *driver_screen_buffer[] = {
-    driver_screen_main_buffer,
-    (uint8_t*)driver_screen_buffer + DRIVER_SCREEN_BUFFER_SIZE,
-};
-
-uint8_t driver_buffer_index = 0;
+extern uint8_t driver_screen_main_buffer[DRIVER_SCREEN_BUFFER_SIZE * DRIVER_SCREEN_BUFFER_COUNT];
+extern uint8_t *driver_screen_buffer[DRIVER_SCREEN_BUFFER_COUNT];
+extern uint8_t driver_buffer_index;
 
 /**
  * GIF image containing the smiley face splash image included from splash.s.
@@ -72,7 +67,7 @@ void driver_swap_buffers();
  * Returns the buffer currently being used for rendering.
  * @return Front buffer.
  */
-uint8_t *driver_get_front_buffer();
+uint8_t const *driver_get_front_buffer();
 
 /**
  * Returns the buffer currently being written to.
@@ -85,6 +80,13 @@ uint8_t *driver_get_back_buffer();
  * @param address Address line.
  */
 void driver_set_address(uint8_t address);
+
+/**
+ * Write GIF to back buffer and swap to front.
+ * @param buffer Buffer containing GIF data.
+ * @return Error.
+ */
+error_t driver_display_gif(uint8_t const *buffer);
 
 /**
  * Rendering loop for the GPU routine to be run on core 1.
