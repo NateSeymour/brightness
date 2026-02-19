@@ -57,16 +57,6 @@ static int att_write_callback(hci_con_handle_t con_handle, uint16_t att_handle, 
             error = error_ok; // crypto_verify_authorization_token(authorization_token, sizeof(authorization_token));
             if (!error_thrown(&error))
             {
-                device_lock_state_t lock_state = device_get_lock_state();
-
-                if (lock_state == LOCKED)
-                {
-                    device_set_lock_state(UNLOCKED);
-                }
-                else
-                {
-                    device_set_lock_state(LOCKED);
-                }
             }
             break;
         }

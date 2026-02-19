@@ -28,6 +28,7 @@ error_t crypto_verify_authorization_token(char const* buffer, size_t size)
         return error;
     }
 
+    /*
     size_t timestamp_ms = strtol(timestamp, nullptr, 10);
     if (timestamp_ms <= g_device_state.last_command_authorization)
     {
@@ -39,6 +40,7 @@ error_t crypto_verify_authorization_token(char const* buffer, size_t size)
     }
 
     g_device_state.last_command_authorization = timestamp_ms;
+    */
 
     return error_ok;
 }
